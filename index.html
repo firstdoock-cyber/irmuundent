@@ -1,0 +1,850 @@
+<!DOCTYPE html>
+<html lang="mn">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Ирмүүн Дент — Цаг захиалах</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@latest/tabler-icons.min.css">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --teal-50: #E1F5EE;
+    --teal-100: #9FE1CB;
+    --teal-200: #5DCAA5;
+    --teal-400: #1D9E75;
+    --teal-600: #0F6E56;
+    --teal-800: #085041;
+    --gray-50: #F1EFE8;
+    --gray-100: #D3D1C7;
+    --gray-200: #B4B2A9;
+    --gray-400: #888780;
+    --gray-800: #444441;
+    --white: #ffffff;
+    --text-primary: #1a1a1a;
+    --text-secondary: #666;
+    --border: #e0e0e0;
+    --bg-secondary: #f8f8f6;
+    --radius-md: 8px;
+    --radius-lg: 12px;
+  }
+
+  body {
+    font-family: 'DM Sans', sans-serif;
+    background: var(--gray-50);
+    color: var(--text-primary);
+    min-height: 100vh;
+    padding: 2rem 1rem;
+  }
+
+  .wrap {
+    max-width: 960px;
+    margin: 0 auto;
+  }
+
+  /* HERO */
+  .hero {
+    background: var(--teal-800);
+    padding: 2.5rem 2.5rem 2rem;
+    border-radius: var(--radius-lg);
+    position: relative;
+    overflow: hidden;
+    margin-bottom: 1.5rem;
+  }
+
+  .hero::before {
+    content: '🦷';
+    position: absolute;
+    right: 2rem;
+    top: 1.5rem;
+    font-size: 100px;
+    opacity: 0.08;
+    pointer-events: none;
+  }
+
+  .hero-badge {
+    display: inline-block;
+    background: var(--teal-400);
+    color: var(--teal-50);
+    font-size: 11px;
+    font-weight: 500;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    padding: 4px 14px;
+    border-radius: 20px;
+    margin-bottom: 1rem;
+  }
+
+  .hero h1 {
+    font-family: 'Playfair Display', Georgia, serif;
+    font-size: 34px;
+    font-weight: 500;
+    color: #fff;
+    margin-bottom: 6px;
+    line-height: 1.2;
+  }
+
+  .hero p {
+    color: rgba(255,255,255,0.6);
+    font-size: 15px;
+    font-weight: 300;
+    margin-bottom: 2rem;
+  }
+
+  .hero-stats {
+    display: flex;
+    gap: 2rem;
+  }
+
+  .stat-num { font-size: 22px; font-weight: 500; color: #fff; }
+  .stat-label { font-size: 11px; color: rgba(255,255,255,0.5); text-transform: uppercase; letter-spacing: 0.06em; }
+
+  /* LAYOUT */
+  .two-col {
+    display: grid;
+    grid-template-columns: 1fr 1.4fr;
+    gap: 1.25rem;
+    align-items: start;
+  }
+
+  @media (max-width: 680px) {
+    .two-col { grid-template-columns: 1fr; }
+    .hero h1 { font-size: 26px; }
+    body { padding: 1rem; }
+  }
+
+  .panel {
+    background: var(--white);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-lg);
+    padding: 1.25rem;
+    margin-bottom: 1.25rem;
+  }
+
+  .panel-title {
+    font-size: 11px;
+    font-weight: 500;
+    color: var(--text-secondary);
+    text-transform: uppercase;
+    letter-spacing: 0.09em;
+    margin-bottom: 1rem;
+  }
+
+  /* SERVICES */
+  .service-list { display: flex; flex-direction: column; gap: 8px; }
+
+  .service-btn {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 10px 12px;
+    border: 1px solid var(--border);
+    border-radius: var(--radius-md);
+    background: transparent;
+    cursor: pointer;
+    text-align: left;
+    transition: all 0.15s;
+    width: 100%;
+    font-family: 'DM Sans', sans-serif;
+  }
+
+  .service-btn:hover { background: var(--bg-secondary); }
+  .service-btn.active { background: var(--teal-50); border-color: var(--teal-400); }
+
+  .service-icon {
+    width: 36px;
+    height: 36px;
+    border-radius: 8px;
+    background: var(--teal-50);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    font-size: 17px;
+    color: var(--teal-600);
+  }
+
+  .service-btn.active .service-icon { background: var(--teal-400); color: #fff; }
+  .service-name { font-size: 14px; font-weight: 500; color: var(--text-primary); }
+  .service-meta { font-size: 12px; color: var(--text-secondary); }
+  .service-price { margin-left: auto; font-size: 13px; font-weight: 500; color: var(--teal-600); white-space: nowrap; }
+
+  /* DOCTORS */
+  .doctor-list { display: flex; flex-direction: column; gap: 8px; }
+
+  .doctor-btn {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 10px 12px;
+    border: 1px solid var(--border);
+    border-radius: var(--radius-md);
+    background: transparent;
+    cursor: pointer;
+    transition: all 0.15s;
+    width: 100%;
+    text-align: left;
+    font-family: 'DM Sans', sans-serif;
+  }
+
+  .doctor-btn:hover { background: var(--bg-secondary); }
+  .doctor-btn.active { border-color: var(--teal-400); background: var(--teal-50); }
+
+  .avatar {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    background: var(--teal-100);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 13px;
+    font-weight: 500;
+    color: var(--teal-800);
+    flex-shrink: 0;
+  }
+
+  .doctor-name { font-size: 14px; font-weight: 500; color: var(--text-primary); }
+  .doctor-spec { font-size: 12px; color: var(--text-secondary); }
+
+  .avail-dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: var(--teal-400);
+    margin-left: auto;
+    flex-shrink: 0;
+  }
+
+  /* CALENDAR */
+  .cal-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 12px;
+  }
+
+  .cal-title { font-size: 14px; font-weight: 500; color: var(--text-primary); }
+
+  .cal-nav { display: flex; gap: 4px; }
+
+  .cal-nav button {
+    width: 30px;
+    height: 30px;
+    border: 1px solid var(--border);
+    border-radius: var(--radius-md);
+    background: transparent;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--text-secondary);
+    font-size: 16px;
+  }
+
+  .cal-nav button:hover { background: var(--bg-secondary); }
+
+  .cal-grid {
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+    gap: 3px;
+    margin-bottom: 1rem;
+  }
+
+  .cal-day-name {
+    text-align: center;
+    font-size: 11px;
+    font-weight: 500;
+    color: var(--text-secondary);
+    padding: 5px 0;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+  }
+
+  .cal-day {
+    aspect-ratio: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: var(--radius-md);
+    font-size: 13px;
+    cursor: pointer;
+    color: var(--text-primary);
+    position: relative;
+    border: 1px solid transparent;
+    transition: all 0.12s;
+  }
+
+  .cal-day:not(.empty):not(.past):hover { background: var(--teal-50); border-color: var(--teal-100); }
+  .cal-day.today { font-weight: 500; color: var(--teal-600); }
+
+  .cal-day.has-slot::after {
+    content: '';
+    position: absolute;
+    bottom: 3px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 4px;
+    height: 4px;
+    border-radius: 50%;
+    background: var(--teal-400);
+  }
+
+  .cal-day.selected { background: var(--teal-400); color: #fff; border-color: var(--teal-400); }
+  .cal-day.selected::after { background: rgba(255,255,255,0.7); }
+  .cal-day.past { color: var(--gray-200); cursor: default; }
+  .cal-day.empty { cursor: default; }
+
+  /* TIME SLOTS */
+  .time-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 6px;
+    margin-bottom: 1rem;
+  }
+
+  .time-btn {
+    padding: 8px 4px;
+    text-align: center;
+    font-size: 12px;
+    border: 1px solid var(--border);
+    border-radius: var(--radius-md);
+    cursor: pointer;
+    background: transparent;
+    color: var(--text-primary);
+    transition: all 0.12s;
+    font-family: 'DM Sans', sans-serif;
+  }
+
+  .time-btn:hover { background: var(--teal-50); border-color: var(--teal-400); }
+  .time-btn.selected { background: var(--teal-400); color: #fff; border-color: var(--teal-400); }
+  .time-btn.taken { opacity: 0.35; cursor: not-allowed; text-decoration: line-through; }
+
+  /* FORM */
+  .section-label {
+    font-size: 11px;
+    font-weight: 500;
+    color: var(--text-secondary);
+    text-transform: uppercase;
+    letter-spacing: 0.09em;
+    margin-bottom: 8px;
+    margin-top: 1rem;
+  }
+
+  .section-label:first-child { margin-top: 0; }
+
+  .form-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 8px;
+    margin-bottom: 8px;
+  }
+
+  .form-group { display: flex; flex-direction: column; gap: 5px; }
+  .form-group.full { grid-column: 1 / -1; }
+
+  .form-group label {
+    font-size: 12px;
+    font-weight: 500;
+    color: var(--text-secondary);
+  }
+
+  .form-group input,
+  .form-group select,
+  .form-group textarea {
+    font-family: 'DM Sans', sans-serif;
+    font-size: 13px;
+    padding: 8px 10px;
+    border: 1px solid var(--border);
+    border-radius: var(--radius-md);
+    outline: none;
+    background: var(--white);
+    color: var(--text-primary);
+    transition: border-color 0.15s;
+  }
+
+  .form-group input:focus,
+  .form-group select:focus,
+  .form-group textarea:focus { border-color: var(--teal-400); }
+
+  .form-group textarea { resize: none; }
+
+  /* SUMMARY */
+  .summary-box {
+    background: var(--teal-50);
+    border: 1px solid var(--teal-100);
+    border-radius: var(--radius-md);
+    padding: 10px 14px;
+    margin-bottom: 12px;
+    font-size: 13px;
+    color: var(--teal-800);
+    display: none;
+  }
+
+  .summary-box.show { display: block; }
+
+  .summary-row {
+    display: flex;
+    justify-content: space-between;
+    padding: 3px 0;
+  }
+
+  .summary-label { color: var(--teal-600); }
+
+  /* CONFIRM BUTTON */
+  .confirm-btn {
+    width: 100%;
+    padding: 13px;
+    background: var(--teal-800);
+    color: #fff;
+    border: none;
+    border-radius: var(--radius-md);
+    font-family: 'DM Sans', sans-serif;
+    font-size: 15px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.15s;
+    margin-top: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+  }
+
+  .confirm-btn:hover { background: var(--teal-600); }
+  .confirm-btn:active { transform: scale(0.98); }
+
+  /* SUCCESS */
+  .success-overlay { display: none; text-align: center; padding: 2rem 1rem; }
+  .success-overlay.show { display: block; }
+
+  .success-icon {
+    width: 68px;
+    height: 68px;
+    border-radius: 50%;
+    background: var(--teal-50);
+    border: 2px solid var(--teal-400);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 auto 1rem;
+    font-size: 30px;
+    color: var(--teal-600);
+  }
+
+  .success-title {
+    font-family: 'Playfair Display', Georgia, serif;
+    font-size: 24px;
+    font-weight: 500;
+    color: var(--text-primary);
+    margin-bottom: 8px;
+  }
+
+  .success-sub {
+    font-size: 14px;
+    color: var(--text-secondary);
+    margin-bottom: 1.5rem;
+    line-height: 1.7;
+  }
+
+  .ticket {
+    background: var(--white);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-lg);
+    padding: 1rem 1.25rem;
+    text-align: left;
+    max-width: 320px;
+    margin: 0 auto 1.5rem;
+  }
+
+  .ticket-row {
+    display: flex;
+    justify-content: space-between;
+    font-size: 13px;
+    padding: 5px 0;
+    border-bottom: 1px solid var(--border);
+  }
+
+  .ticket-row:last-child { border-bottom: none; }
+  .ticket-key { color: var(--text-secondary); }
+  .ticket-val { font-weight: 500; }
+
+  .new-btn {
+    padding: 10px 28px;
+    background: transparent;
+    border: 1px solid var(--teal-400);
+    color: var(--teal-600);
+    border-radius: var(--radius-md);
+    font-family: 'DM Sans', sans-serif;
+    font-size: 14px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: background 0.15s;
+  }
+
+  .new-btn:hover { background: var(--teal-50); }
+
+  .no-slot-msg {
+    grid-column: 1 / -1;
+    font-size: 13px;
+    color: var(--text-secondary);
+    padding: 8px 0;
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <div class="hero">
+    <div class="hero-badge">Ирмүүн Дент</div>
+    <h1>Цаг захиалах</h1>
+    <p>Мэргэжлийн шүдний эмч нараас хялбархан цаг авна уу</p>
+    <div class="hero-stats">
+      <div>
+        <div class="stat-num">12+</div>
+        <div class="stat-label">Эмч</div>
+      </div>
+      <div>
+        <div class="stat-num">8000+</div>
+        <div class="stat-label">Үйлчлүүлэгч</div>
+      </div>
+      <div>
+        <div class="stat-num">98%</div>
+        <div class="stat-label">Сэтгэл ханамж</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="two-col">
+
+    <!-- LEFT COLUMN -->
+    <div>
+      <div class="panel">
+        <div class="panel-title">Үйлчилгээ сонгох</div>
+        <div class="service-list" id="services">
+
+          <button class="service-btn active" onclick="selectService(this,'Шүдний үзлэг','₮30,000','30 мин')">
+            <div class="service-icon"><i class="ti ti-stethoscope"></i></div>
+            <div>
+              <div class="service-name">Шүдний үзлэг</div>
+              <div class="service-meta">30 мин</div>
+            </div>
+            <span class="service-price">₮30,000</span>
+          </button>
+
+          <button class="service-btn" onclick="selectService(this,'Шүд цэвэрлэгээ','₮50,000','45 мин')">
+            <div class="service-icon"><i class="ti ti-sparkles"></i></div>
+            <div>
+              <div class="service-name">Шүд цэвэрлэгээ</div>
+              <div class="service-meta">45 мин</div>
+            </div>
+            <span class="service-price">₮50,000</span>
+          </button>
+
+          <button class="service-btn" onclick="selectService(this,'Шүд цагаруулах','₮120,000','60 мин')">
+            <div class="service-icon"><i class="ti ti-sun"></i></div>
+            <div>
+              <div class="service-name">Шүд цагаруулах</div>
+              <div class="service-meta">60 мин</div>
+            </div>
+            <span class="service-price">₮120,000</span>
+          </button>
+
+          <button class="service-btn" onclick="selectService(this,'Шүд авах','₮80,000','45 мин')">
+            <div class="service-icon"><i class="ti ti-tooth"></i></div>
+            <div>
+              <div class="service-name">Шүд авах</div>
+              <div class="service-meta">45 мин</div>
+            </div>
+            <span class="service-price">₮80,000</span>
+          </button>
+
+          <button class="service-btn" onclick="selectService(this,'Шүд бөглөх','₮60,000','45 мин')">
+            <div class="service-icon"><i class="ti ti-circle-dot"></i></div>
+            <div>
+              <div class="service-name">Шүд бөглөх</div>
+              <div class="service-meta">45 мин</div>
+            </div>
+            <span class="service-price">₮60,000</span>
+          </button>
+
+          <button class="service-btn" onclick="selectService(this,'Яаралтай тусламж','₮100,000','60 мин')">
+            <div class="service-icon"><i class="ti ti-urgent"></i></div>
+            <div>
+              <div class="service-name">Яаралтай тусламж</div>
+              <div class="service-meta">60 мин</div>
+            </div>
+            <span class="service-price">₮100,000</span>
+          </button>
+
+        </div>
+      </div>
+
+      <div class="panel">
+        <div class="panel-title">Эмч сонгох</div>
+        <div class="doctor-list">
+
+          <button class="doctor-btn active" onclick="selectDoctor(this,'Д. Нарантуяа')">
+            <div class="avatar">ДН</div>
+            <div>
+              <div class="doctor-name">Д. Нарантуяа</div>
+              <div class="doctor-spec">Ортодонтист · 10 жил</div>
+            </div>
+            <div class="avail-dot"></div>
+          </button>
+
+          <button class="doctor-btn" onclick="selectDoctor(this,'Б. Энхжаргал')">
+            <div class="avatar">БЭ</div>
+            <div>
+              <div class="doctor-name">Б. Энхжаргал</div>
+              <div class="doctor-spec">Ерөнхий эмч · 7 жил</div>
+            </div>
+            <div class="avail-dot"></div>
+          </button>
+
+          <button class="doctor-btn" onclick="selectDoctor(this,'Г. Батбаяр')">
+            <div class="avatar">ГБ</div>
+            <div>
+              <div class="doctor-name">Г. Батбаяр</div>
+              <div class="doctor-spec">Хүүхдийн эмч · 5 жил</div>
+            </div>
+            <div class="avail-dot"></div>
+          </button>
+
+        </div>
+      </div>
+    </div>
+
+    <!-- RIGHT COLUMN -->
+    <div class="panel">
+
+      <div id="booking-form">
+        <div class="panel-title">Цаг сонгох</div>
+
+        <div class="cal-header">
+          <span class="cal-title" id="cal-month-label"></span>
+          <div class="cal-nav">
+            <button onclick="changeMonth(-1)"><i class="ti ti-chevron-left"></i></button>
+            <button onclick="changeMonth(1)"><i class="ti ti-chevron-right"></i></button>
+          </div>
+        </div>
+
+        <div class="cal-grid" id="cal-grid"></div>
+
+        <div class="section-label">Боломжтой цаг</div>
+        <div class="time-grid" id="time-grid"></div>
+
+        <div class="summary-box" id="summary-box">
+          <div class="summary-row"><span class="summary-label">Үйлчилгээ</span><span id="s-service">—</span></div>
+          <div class="summary-row"><span class="summary-label">Эмч</span><span id="s-doctor">—</span></div>
+          <div class="summary-row"><span class="summary-label">Огноо</span><span id="s-date">—</span></div>
+          <div class="summary-row"><span class="summary-label">Цаг</span><span id="s-time">—</span></div>
+          <div class="summary-row"><span class="summary-label">Үнэ</span><span id="s-price">—</span></div>
+        </div>
+
+        <div class="section-label">Таны мэдээлэл</div>
+        <div class="form-row">
+          <div class="form-group">
+            <label>Овог нэр</label>
+            <input type="text" placeholder="Бат Болд" id="f-name">
+          </div>
+          <div class="form-group">
+            <label>Утас</label>
+            <input type="tel" placeholder="9911 2233" id="f-phone">
+          </div>
+        </div>
+        <div class="form-row">
+          <div class="form-group full">
+            <label>И-мэйл (заавал биш)</label>
+            <input type="email" placeholder="example@gmail.com" id="f-email">
+          </div>
+        </div>
+        <div class="form-row">
+          <div class="form-group full">
+            <label>Тэмдэглэл</label>
+            <textarea rows="2" placeholder="Ямар нэгэн тэмдэглэл байвал энд бичнэ үү..." id="f-note"></textarea>
+          </div>
+        </div>
+
+        <button class="confirm-btn" onclick="submitForm()">
+          <i class="ti ti-calendar-check"></i>
+          Цаг баталгаажуулах
+        </button>
+      </div>
+
+      <div class="success-overlay" id="success-screen">
+        <div class="success-icon"><i class="ti ti-check"></i></div>
+        <div class="success-title">Цаг захиалагдлаа!</div>
+        <div class="success-sub">Таны цаг амжилттай бүртгэгдлээ.<br>Утсаар баталгаажуулах мессеж явуулах болно.</div>
+        <div class="ticket" id="ticket"></div>
+        <button class="new-btn" onclick="resetForm()">Дахин цаг захиалах</button>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<script>
+const MONTHS = ['1-р сар','2-р сар','3-р сар','4-р сар','5-р сар','6-р сар','7-р сар','8-р сар','9-р сар','10-р сар','11-р сар','12-р сар'];
+const DAYS = ['Да','Мя','Лх','Пү','Ба','Бя','Ня'];
+const TIMES_ALL = ['09:00','09:30','10:00','10:30','11:00','11:30','13:00','13:30','14:00','14:30','15:00','15:30','16:00','16:30','17:00','17:30'];
+const TAKEN = ['09:00','10:30','14:00','16:00'];
+
+const today = new Date();
+
+let state = {
+  year: today.getFullYear(),
+  month: today.getMonth(),
+  selectedDate: null,
+  selectedTime: null,
+  selectedService: 'Шүдний үзлэг',
+  selectedPrice: '₮30,000',
+  selectedDuration: '30 мин',
+  selectedDoctor: 'Д. Нарантуяа'
+};
+
+function selectService(btn, name, price, dur) {
+  document.querySelectorAll('.service-btn').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+  state.selectedService = name;
+  state.selectedPrice = price;
+  state.selectedDuration = dur;
+  updateSummary();
+}
+
+function selectDoctor(btn, name) {
+  document.querySelectorAll('.doctor-btn').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+  state.selectedDoctor = name;
+  updateSummary();
+}
+
+function changeMonth(dir) {
+  state.month += dir;
+  if (state.month > 11) { state.month = 0; state.year++; }
+  if (state.month < 0) { state.month = 11; state.year--; }
+  state.selectedDate = null;
+  state.selectedTime = null;
+  renderCal();
+  renderTimes();
+  updateSummary();
+}
+
+function renderCal() {
+  const grid = document.getElementById('cal-grid');
+  const label = document.getElementById('cal-month-label');
+  label.textContent = state.year + ' оны ' + MONTHS[state.month];
+
+  const firstDay = new Date(state.year, state.month, 1).getDay();
+  const offset = (firstDay + 6) % 7;
+  const daysInMonth = new Date(state.year, state.month + 1, 0).getDate();
+
+  let html = DAYS.map(d => `<div class="cal-day-name">${d}</div>`).join('');
+  for (let i = 0; i < offset; i++) html += `<div class="cal-day empty"></div>`;
+
+  for (let d = 1; d <= daysInMonth; d++) {
+    const dt = new Date(state.year, state.month, d);
+    const isToday = dt.toDateString() === today.toDateString();
+    const isPast = dt < today && !isToday;
+    const isSun = dt.getDay() === 0;
+    const isSelected = state.selectedDate === d;
+    const hasSlot = !isPast && !isSun;
+
+    let cls = 'cal-day';
+    if (isToday) cls += ' today';
+    if (isPast || isSun) cls += ' past';
+    else if (hasSlot) cls += ' has-slot';
+    if (isSelected) cls += ' selected';
+
+    const click = (!isPast && !isSun) ? `onclick="selectDay(${d})"` : '';
+    html += `<div class="${cls}" ${click}>${d}</div>`;
+  }
+
+  grid.innerHTML = html;
+}
+
+function selectDay(d) {
+  state.selectedDate = d;
+  state.selectedTime = null;
+  renderCal();
+  renderTimes();
+  updateSummary();
+}
+
+function renderTimes() {
+  const grid = document.getElementById('time-grid');
+  if (!state.selectedDate) {
+    grid.innerHTML = `<div class="no-slot-msg">Эхлээд өдөр сонгоно уу</div>`;
+    return;
+  }
+  grid.innerHTML = TIMES_ALL.map(t => {
+    const taken = TAKEN.includes(t);
+    const sel = state.selectedTime === t;
+    return `<button class="time-btn${taken ? ' taken' : ''}${sel ? ' selected' : ''}" ${taken ? 'disabled' : ''} onclick="selectTime('${t}')">${t}</button>`;
+  }).join('');
+}
+
+function selectTime(t) {
+  state.selectedTime = t;
+  renderTimes();
+  updateSummary();
+}
+
+function updateSummary() {
+  const box = document.getElementById('summary-box');
+  if (state.selectedDate && state.selectedTime) {
+    box.classList.add('show');
+    document.getElementById('s-service').textContent = state.selectedService;
+    document.getElementById('s-doctor').textContent = state.selectedDoctor;
+    document.getElementById('s-date').textContent = `${state.year}/${state.month + 1}/${state.selectedDate}`;
+    document.getElementById('s-time').textContent = state.selectedTime + ' (' + state.selectedDuration + ')';
+    document.getElementById('s-price').textContent = state.selectedPrice;
+  } else {
+    box.classList.remove('show');
+  }
+}
+
+function submitForm() {
+  const name = document.getElementById('f-name').value.trim();
+  const phone = document.getElementById('f-phone').value.trim();
+  if (!name) { alert('Нэрээ оруулна уу'); return; }
+  if (!phone) { alert('Утасны дугаараа оруулна уу'); return; }
+  if (!state.selectedDate) { alert('Өдөр сонгоно уу'); return; }
+  if (!state.selectedTime) { alert('Цаг сонгоно уу'); return; }
+
+  const ticket = document.getElementById('ticket');
+  const rows = [
+    ['Нэр', name],
+    ['Утас', phone],
+    ['Үйлчилгээ', state.selectedService],
+    ['Эмч', state.selectedDoctor],
+    ['Огноо', `${state.year}/${state.month + 1}/${state.selectedDate}`],
+    ['Цаг', state.selectedTime],
+    ['Үнэ', state.selectedPrice]
+  ];
+  ticket.innerHTML = rows.map(([k, v]) =>
+    `<div class="ticket-row"><span class="ticket-key">${k}</span><span class="ticket-val">${v}</span></div>`
+  ).join('');
+
+  document.getElementById('booking-form').style.display = 'none';
+  document.getElementById('success-screen').classList.add('show');
+}
+
+function resetForm() {
+  document.getElementById('booking-form').style.display = 'block';
+  document.getElementById('success-screen').classList.remove('show');
+  ['f-name','f-phone','f-email','f-note'].forEach(id => document.getElementById(id).value = '');
+  state.selectedDate = null;
+  state.selectedTime = null;
+  renderCal();
+  renderTimes();
+  updateSummary();
+}
+
+renderCal();
+renderTimes();
+</script>
+</body>
+</html>
