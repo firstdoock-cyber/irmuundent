@@ -386,21 +386,54 @@ function updateSummary(){
   }
 }
 
-function submitForm(){
+async function submitForm(){
   const name=document.getElementById('f-name').value.trim();
   const phone=document.getElementById('f-phone').value.trim();
+  const note=document.getElementById('f-note').value.trim();
   if(!name){alert('Нэрээ оруулна уу');return;}
   if(!phone){alert('Утасны дугаараа оруулна уу');return;}
   if(!state.selectedService){alert('Үйлчилгээ сонгоно уу');return;}
   if(!state.selectedDate){alert('Өдөр сонгоно уу');return;}
   if(!state.selectedTime){alert('Цаг сонгоно уу');return;}
-  const ticket=document.getElementById('ticket');
-  const rows=[['Нэр',name],['Утас',phone],['Үйлчилгээ',state.selectedService],
-    ['Огноо',`${state.year}/${state.month+1}/${state.selectedDate}`],
-    ['Цаг',state.selectedTime],['Үнэ',state.selectedPrice||'—']];
-  ticket.innerHTML=rows.map(([k,v])=>`<div class="ticket-row"><span class="ticket-key">${k}</span><span class="ticket-val">${v}</span></div>`).join('');
-  document.getElementById('booking-form').style.display='none';
-  document.getElementById('success-screen').classList.add('show');
+
+  const btn=document.querySelector('.confirm-btn');
+  btn.disabled=true;
+  btn.innerHTML='<i class="ti ti-loader"></i> Илгээж байна...';
+
+  const dateStr=`${state.year}/${state.month+1}/${state.selectedDate}`;
+
+  try {
+    const res = await fetch('https://formspree.io/f/xykaewea', {
+      method: 'POST',
+      headers: {'Content-Type':'application/json','Accept':'application/json'},
+      body: JSON.stringify({
+        'Нэр': name,
+        'Утас': phone,
+        'Үйлчилгээ': state.selectedService,
+        'Үнэ': state.selectedPrice||'—',
+        'Огноо': dateStr,
+        'Цаг': state.selectedTime,
+        'Тэмдэглэл': note||'—'
+      })
+    });
+    const data = await res.json();
+    if(res.ok){
+      const ticket=document.getElementById('ticket');
+      const rows=[['Нэр',name],['Утас',phone],['Үйлчилгээ',state.selectedService],
+        ['Огноо',dateStr],['Цаг',state.selectedTime],['Үнэ',state.selectedPrice||'—']];
+      ticket.innerHTML=rows.map(([k,v])=>`<div class="ticket-row"><span class="ticket-key">${k}</span><span class="ticket-val">${v}</span></div>`).join('');
+      document.getElementById('booking-form').style.display='none';
+      document.getElementById('success-screen').classList.add('show');
+    } else {
+      alert('Алдаа гарлаа. Дахин оролдоно уу.');
+      btn.disabled=false;
+      btn.innerHTML='<i class="ti ti-calendar-check"></i> Цаг баталгаажуулах';
+    }
+  } catch(e){
+    alert('Интернэт холболт шалгаад дахин оролдоно уу.');
+    btn.disabled=false;
+    btn.innerHTML='<i class="ti ti-calendar-check"></i> Цаг баталгаажуулах';
+  }
 }
 
 function resetForm(){
